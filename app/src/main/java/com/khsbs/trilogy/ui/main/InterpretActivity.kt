@@ -2,11 +2,11 @@ package com.khsbs.trilogy.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.khsbs.trilogy.R
 import com.khsbs.trilogy.databinding.ActivityInterpretBinding
+import com.khsbs.trilogy.ui.input.InputTextFragment
 
 class InterpretActivity : AppCompatActivity() {
 
@@ -22,5 +22,9 @@ class InterpretActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         binding.viewModel = this.viewModel
+
+        binding.cvInterpetResult.setOnClickListener {
+            InputTextFragment().show(supportFragmentManager, "input_text")
+        }
     }
 }

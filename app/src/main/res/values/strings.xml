@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Trilogy</string>
+
+    <string name="input_text">텍스트 입력</string>
 </resources>

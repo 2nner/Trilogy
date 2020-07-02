@@ -63,6 +63,10 @@ class InterpretViewModel : ViewModel() {
         )
     }
 
+    fun swapLanguage() {
+        sourceLanguage.value = targetLanguage.value.also { targetLanguage.value = sourceLanguage.value }
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposable.dispose()
