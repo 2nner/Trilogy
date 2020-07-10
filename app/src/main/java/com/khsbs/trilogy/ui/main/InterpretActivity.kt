@@ -17,8 +17,7 @@ class InterpretActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_interpret)
-        viewModel = ViewModelProvider(this, InterpretViewModelFactory())
-            .get(InterpretViewModel::class.java)
+        viewModel = ViewModelProvider(this, InterpretViewModelFactory()).get(InterpretViewModel::class.java)
 
         binding.lifecycleOwner = this
         binding.viewModel = this.viewModel

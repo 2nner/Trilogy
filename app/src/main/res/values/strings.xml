@@ -2,4 +2,9 @@
     <string name="app_name">Trilogy</string>
 
     <string name="input_text">텍스트 입력</string>
+    <string name="interpret">번역</string>
+
+    <string name="interpretResult_papago">네이버 파파고</string>
+    <string name="interpretResult_kakaoi">카카오 i 번역기</string>
+    <string name="interpretResult_google">구글 번역기</string>
 </resources>

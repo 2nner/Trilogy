@@ -19,7 +19,7 @@ class InterpretViewModel : ViewModel() {
 
     val resultPapago = MutableLiveData<String>()
     val resultKakaoi = MutableLiveData<String>()
-    val resultGoogle = MutableLiveData<String>()
+    val resultGoogle = MutableLiveData<String>("추후 지원 예정입니다")
 
     private val disposable = CompositeDisposable()
 
