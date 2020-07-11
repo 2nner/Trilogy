@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/interpret"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:textColor="@color/appColor"
                 app:layout_constraintTop_toTopOf="@id/iv_go_back"
                 app:layout_constraintBottom_toBottomOf="@id/iv_go_back"

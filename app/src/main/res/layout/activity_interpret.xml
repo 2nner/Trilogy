@@ -4,6 +4,7 @@
         <variable
             name="viewModel"
             type="com.khsbs.trilogy.ui.main.InterpretViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -47,8 +48,10 @@
             app:layout_constraintBottom_toTopOf="@id/cv_interpet_result" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_source_lang"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
             android:text="@{viewModel.sourceLanguage.displayName}"
             android:textSize="18sp"
             android:textColor="@android:color/white"
@@ -58,8 +61,10 @@
             app:layout_constraintEnd_toStartOf="@id/iv_exchange_arrow"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_target_lang"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
             android:text="@{viewModel.targetLanguage.displayName}"
             android:textSize="18sp"
             android:textColor="@android:color/white"

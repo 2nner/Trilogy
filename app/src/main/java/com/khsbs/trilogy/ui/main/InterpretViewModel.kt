@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.khsbs.trilogy.BuildConfig
 import com.khsbs.trilogy.api.ApiRepository
 import com.khsbs.trilogy.model.LanguageType
+import com.khsbs.trilogy.ui.custom.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,6 +21,8 @@ class InterpretViewModel : ViewModel() {
     val resultPapago = MutableLiveData<String>()
     val resultKakaoi = MutableLiveData<String>()
     val resultGoogle = MutableLiveData<String>("추후 지원 예정입니다")
+
+    val dialogEvent = SingleLiveEvent<Any>()
 
     private val disposable = CompositeDisposable()
 
@@ -65,6 +68,21 @@ class InterpretViewModel : ViewModel() {
 
     fun swapLanguage() {
         sourceLanguage.value = targetLanguage.value.also { targetLanguage.value = sourceLanguage.value }
+    }
+
+    fun setLanguage(languageType: LanguageType, targetPoint: String) {
+        if (targetPoint == "source") {
+            sourceLanguage.value = languageType
+        }
+        else if (targetPoint == "target") {
+            targetLanguage.value = languageType
+        }
+
+        Timber.d(
+            "source : ${sourceLanguage.value!!.displayName} & target : ${targetLanguage.value!!.displayName}"
+        )
+
+        dialogEvent.call()
     }
 
     override fun onCleared() {

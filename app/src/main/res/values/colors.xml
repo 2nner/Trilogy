@@ -8,4 +8,6 @@
     <color name="colorPapago">#00B43B</color>
     <color name="colorKakaoi">#F2DB00</color>
     <color name="colorGoogleTranslator">#66000000</color>
+
+    <color name="select_language_darkGrey">#66000000</color>
 </resources>

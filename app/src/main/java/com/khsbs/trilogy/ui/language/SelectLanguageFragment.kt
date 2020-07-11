@@ -1,31 +1,35 @@
-package com.khsbs.trilogy.ui.input
+package com.khsbs.trilogy.ui.language
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.khsbs.trilogy.R
-import com.khsbs.trilogy.databinding.DialogInputTextBinding
-import com.khsbs.trilogy.ui.custom.FullScreenBottomSheetDialogFragment
+import com.khsbs.trilogy.databinding.DialogSelectLanguageBinding
 import com.khsbs.trilogy.ui.main.InterpretViewModel
+import com.khsbs.trilogy.R
+import com.khsbs.trilogy.ui.custom.FullScreenBottomSheetDialogFragment
 import com.khsbs.trilogy.ui.main.InterpretViewModelFactory
-import com.khsbs.trilogy.util.multilineIme
 
-class InputTextFragment : FullScreenBottomSheetDialogFragment() {
-    private lateinit var binding: DialogInputTextBinding
+class SelectLanguageFragment : FullScreenBottomSheetDialogFragment() {
+    private lateinit var binding: DialogSelectLanguageBinding
     private lateinit var viewModel: InterpretViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_input_text, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_select_language, container, false)
         viewModel = ViewModelProvider(requireActivity(), InterpretViewModelFactory()).get(InterpretViewModel::class.java)
 
-        binding.viewModel = this.viewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.etInputText.multilineIme(EditorInfo.IME_ACTION_SEARCH)
+        if (tag == "select_language_source") {
+            binding.targetPoint = "source"
+        }
+        else if (tag == "select_language_target") {
+            binding.targetPoint = "target"
+        }
 
         return binding.root
     }
@@ -33,22 +37,12 @@ class InputTextFragment : FullScreenBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.etInputText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                doInterpret()
-                true
-            }
-            else
-                false
-        }
-
         binding.ivGoBack.setOnClickListener {
             dismiss()
         }
-    }
 
-    private fun doInterpret() {
-        viewModel.interpret()
-        binding.interpretResultContainer.visibility = View.VISIBLE
+        viewModel.dialogEvent.observe(viewLifecycleOwner, Observer {
+            dismiss()
+        })
     }
 }

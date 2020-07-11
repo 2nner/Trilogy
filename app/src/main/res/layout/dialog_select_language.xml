@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="targetPoint"
+            type="String" />
+        <variable
+            name="languageType"
+            type="com.khsbs.trilogy.model.LanguageType" />
+        <variable
+            name="viewModel"
+            type="com.khsbs.trilogy.ui.main.InterpretViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:padding="9dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_language"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/appColor"
+            app:layout_constraintTop_toTopOf="@id/iv_go_back"
+            app:layout_constraintBottom_toBottomOf="@id/iv_go_back"
+            app:layout_constraintStart_toEndOf="@id/iv_go_back"/>
+
+        <TextView
+            android:id="@+id/tv_korean_kor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{languageType.KOR.displayName}"
+            tools:text="한국어"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/appColor"
+            android:onClick="@{() -> viewModel.setLanguage(languageType.KOR, targetPoint)}"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="27dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_go_back"
+            app:layout_constraintEnd_toStartOf="@id/tv_korean_eng"/>
+
+        <TextView
+            android:id="@+id/tv_korean_eng"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/korean_eng"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/select_language_darkGrey"
+            android:onClick="@{() -> viewModel.setLanguage(languageType.KOR, targetPoint)}"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginStart="110dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_korean_kor"
+            app:layout_constraintBottom_toBottomOf="@id/tv_korean_kor"/>
+
+        <TextView
+            android:id="@+id/tv_english_kor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/english"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/appColor"
+            android:onClick="@{() -> viewModel.setLanguage(languageType.ENG, targetPoint)}"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="27dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_korean_kor"
+            app:layout_constraintEnd_toStartOf="@id/tv_english_eng"/>
+
+        <TextView
+            android:id="@+id/tv_english_eng"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/english_eng"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/select_language_darkGrey"
+            android:onClick="@{() -> viewModel.setLanguage(languageType.ENG, targetPoint)}"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginStart="110dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_english_kor"
+            app:layout_constraintBottom_toBottomOf="@id/tv_english_kor"/>
+
+        <TextView
+            android:id="@+id/tv_chinese_kor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/chinese"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/appColor"
+            android:onClick="@{() -> viewModel.setLanguage(languageType.ZHCN, targetPoint)}"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="27dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_english_kor"
+            app:layout_constraintEnd_toStartOf="@id/tv_chinese_eng"/>
+
+        <TextView
+            android:id="@+id/tv_chinese_eng"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/chinese_eng"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/select_language_darkGrey"
+            android:onClick="@{() -> viewModel.setLanguage(languageType.ZHCN, targetPoint)}"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginStart="110dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_chinese_kor"
+            app:layout_constraintBottom_toBottomOf="@id/tv_chinese_kor"/>
+
+        <TextView
+            android:id="@+id/tv_japanese_kor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/japanese"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/appColor"
+            android:onClick="@{() -> viewModel.setLanguage(languageType.JAP, targetPoint)}"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="27dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chinese_kor"
+            app:layout_constraintEnd_toStartOf="@id/tv_japanese_eng"/>
+
+        <TextView
+            android:id="@+id/tv_japanese_eng"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/japanese_eng"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/select_language_darkGrey"
+            android:onClick="@{() -> viewModel.setLanguage(languageType.JAP, targetPoint)}"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginStart="110dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_japanese_kor"
+            app:layout_constraintBottom_toBottomOf="@id/tv_japanese_kor"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
