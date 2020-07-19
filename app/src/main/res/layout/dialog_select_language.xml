@@ -9,7 +9,7 @@
             type="String" />
         <variable
             name="languageType"
-            type="com.khsbs.trilogy.model.LanguageType" />
+            type="com.khsbs.trilogy.repository.entity.LanguageType" />
         <variable
             name="viewModel"
             type="com.khsbs.trilogy.ui.main.InterpretViewModel" />

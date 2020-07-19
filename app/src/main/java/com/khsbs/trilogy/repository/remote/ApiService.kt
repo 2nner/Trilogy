@@ -1,7 +1,8 @@
-package com.khsbs.trilogy.api
+package com.khsbs.trilogy.repository.remote
 
-import com.khsbs.trilogy.model.Kakaoi
-import com.khsbs.trilogy.model.Papago
+import com.khsbs.trilogy.repository.entity.GoogleTrans
+import com.khsbs.trilogy.repository.entity.Kakaoi
+import com.khsbs.trilogy.repository.entity.Papago
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -28,5 +29,12 @@ interface KakaoiApiService {
 }
 
 interface GoogleApiService {
-
+    @FormUrlEncoded
+    @POST("language/translate/v2")
+    fun getTranslateResult(
+        @Field("key") apiKey: String,
+        @Field("q") query: String,
+        @Field("source") source: String,
+        @Field("target") target: String
+    ) : Single<GoogleTrans>
 }

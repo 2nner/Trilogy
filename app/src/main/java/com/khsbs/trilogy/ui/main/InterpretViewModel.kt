@@ -4,14 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.khsbs.trilogy.BuildConfig
-import com.khsbs.trilogy.api.ApiRepository
-import com.khsbs.trilogy.model.LanguageType
+import com.khsbs.trilogy.repository.remote.ApiRepository
+import com.khsbs.trilogy.repository.entity.LanguageType
 import com.khsbs.trilogy.ui.custom.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
-import java.lang.StringBuilder
+import kotlin.text.StringBuilder
 
 class InterpretViewModel : ViewModel() {
     val inputMessage = MutableLiveData<String>()
@@ -20,7 +20,7 @@ class InterpretViewModel : ViewModel() {
 
     val resultPapago = MutableLiveData<String>()
     val resultKakaoi = MutableLiveData<String>()
-    val resultGoogle = MutableLiveData<String>("추후 지원 예정입니다")
+    val resultGoogle = MutableLiveData<String>()
 
     val dialogEvent = SingleLiveEvent<Any>()
 
@@ -63,6 +63,25 @@ class InterpretViewModel : ViewModel() {
             }, {
                 resultKakaoi.value = it.message
             })
+        )
+        disposable.add(
+            ApiRepository.googleService.getTranslateResult(
+                BuildConfig.GOOGLE_CREDENTIAL_API_KEY,
+                inputMessage.value ?: "",
+                sourceLanguage.value!!.googleCode,
+                targetLanguage.value!!.googleCode
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    val builder = StringBuilder()
+                    it.data.translations.forEach { str ->
+                        builder.append(str.translatedText)
+                    }
+                    resultGoogle.value = builder.toString()
+                }, {
+                    resultGoogle.value = it.message
+                })
         )
     }
 

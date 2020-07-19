@@ -1,4 +1,4 @@
-package com.khsbs.trilogy.model
+package com.khsbs.trilogy.repository.entity
 
 import com.squareup.moshi.Json
 

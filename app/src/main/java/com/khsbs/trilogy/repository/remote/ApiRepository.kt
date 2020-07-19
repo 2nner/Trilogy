@@ -1,4 +1,4 @@
-package com.khsbs.trilogy.api
+package com.khsbs.trilogy.repository.remote
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -42,5 +42,15 @@ object ApiRepository {
             .client(client)
             .build()
             .create(KakaoiApiService::class.java)
+    }
+
+    val googleService: GoogleApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(URL_GOOGLE)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(client)
+            .build()
+            .create(GoogleApiService::class.java)
     }
 }
