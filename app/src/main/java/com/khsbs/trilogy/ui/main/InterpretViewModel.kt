@@ -1,15 +1,24 @@
 package com.khsbs.trilogy.ui.main
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.khsbs.trilogy.BaseApplication
 import com.khsbs.trilogy.BuildConfig
+import com.khsbs.trilogy.repository.entity.InterpretHistory
 import com.khsbs.trilogy.repository.remote.ApiRepository
 import com.khsbs.trilogy.repository.entity.LanguageType
+import com.khsbs.trilogy.repository.local.AppDatabase
 import com.khsbs.trilogy.ui.custom.SingleLiveEvent
+import com.khsbs.trilogy.ui.history.HistoryRepository
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.text.StringBuilder
 
@@ -25,62 +34,43 @@ class InterpretViewModel : ViewModel() {
     val dialogEvent = SingleLiveEvent<Any>()
 
     private val disposable = CompositeDisposable()
+    private val interpretRepository = InterpretRepository()
+    private val historyRepository = HistoryRepository(AppDatabase.getDatabase().historyDao())
 
     fun interpret() {
         disposable.add(
-            ApiRepository.papagoService.getTranslatedResult(
-                BuildConfig.NAVER_CLIENT_ID,
-                BuildConfig.NAVER_CLIENT_SECRET,
-                sourceLanguage.value!!.papagoCode,
-                targetLanguage.value!!.papagoCode,
-                inputMessage.value ?: ""
-            )
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    resultPapago.value = it.message.result.translatedText
-                }, {
-                    resultPapago.value = it.message
-                })
-        )
-        disposable.add(
-            ApiRepository.kakaoiService.getTranslatedResult(
-                "KakaoAK " + BuildConfig.KAKAO_API_KEY,
-                inputMessage.value ?: "",
-                sourceLanguage.value!!.kakaoiCode,
-                targetLanguage.value!!.kakaoiCode
-            )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                val builder = StringBuilder()
-                it.translatedText.forEach { listBlock->
-                    listBlock.forEach { str ->
-                        builder.append(str)
-                    }
-                }
-                resultKakaoi.value = builder.toString()
-            }, {
-                resultKakaoi.value = it.message
-            })
-        )
-        disposable.add(
-            ApiRepository.googleService.getTranslateResult(
-                BuildConfig.GOOGLE_CREDENTIAL_API_KEY,
-                inputMessage.value ?: "",
-                sourceLanguage.value!!.googleCode,
-                targetLanguage.value!!.googleCode
-            )
+            interpretRepository.interpret(sourceLanguage.value!!, targetLanguage.value!!, inputMessage.value ?: "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     val builder = StringBuilder()
-                    it.data.translations.forEach { str ->
+
+                    resultPapago.value = it.resultPapago!!.message.result.translatedText
+
+                    it.resultKakaoi!!.translatedText.forEach { listBlock ->
+                        listBlock.forEach { str ->
+                            builder.append(str)
+                        }
+                    }
+                    resultKakaoi.value = builder.toString()
+
+                    builder.clear()
+
+                    it.resultGoogleTrans!!.data.translations.forEach { str ->
                         builder.append(str.translatedText)
                     }
                     resultGoogle.value = builder.toString()
+
+                    insert(InterpretHistory(
+                        inputMessage.value!!,
+                        sourceLanguage.value!!.displayName,
+                        targetLanguage.value!!.displayName,
+                        resultPapago.value!!,
+                        resultKakaoi.value!!,
+                        resultGoogle.value!!
+                    ))
                 }, {
-                    resultGoogle.value = it.message
+                    Toast.makeText(BaseApplication.context, "서버와의 통신 도중 오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
                 })
         )
     }
@@ -102,6 +92,10 @@ class InterpretViewModel : ViewModel() {
         )
 
         dialogEvent.call()
+    }
+
+    fun insert(history: InterpretHistory) = viewModelScope.launch(Dispatchers.IO) {
+        historyRepository.insert(history)
     }
 
     override fun onCleared() {

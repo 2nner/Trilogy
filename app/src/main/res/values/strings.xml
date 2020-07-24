@@ -4,6 +4,7 @@
     <string name="input_text">텍스트 입력</string>
     <string name="interpret">번역</string>
     <string name="change_language">언어 변경</string>
+    <string name="recent_history">최근 기록</string>
 
     <string name="interpretResult_papago">네이버 파파고</string>
     <string name="interpretResult_kakaoi">카카오 i 번역기</string>
@@ -17,5 +18,8 @@
     <string name="chinese_eng">Chinese</string>
     <string name="japanese">일본어</string>
     <string name="japanese_eng">Japanese</string>
+
+    <string name="recents">Recents</string>
+    <string name="no_items">최근 기록이 없습니다 :X</string>
 
 </resources>

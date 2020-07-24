@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
             type="com.khsbs.trilogy.ui.main.InterpretViewModel" />
-
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/appColor">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_interpet_result"
+            android:id="@+id/cv_input_text"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@android:color/white"
@@ -33,6 +33,18 @@
                 android:textSize="24sp"
                 android:gravity="top"
                 android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/tv_recentIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recents"
+                android:textSize="12sp"
+                android:textColor="@color/appColor"
+                android:drawableTop="@drawable/ic_recent"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="18dp"
+                android:layout_marginEnd="18dp"/>
         </com.google.android.material.card.MaterialCardView>
 
         <ImageView
@@ -45,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cv_interpet_result" />
+            app:layout_constraintBottom_toTopOf="@id/cv_input_text" />
 
         <TextView
             android:id="@+id/tv_source_lang"

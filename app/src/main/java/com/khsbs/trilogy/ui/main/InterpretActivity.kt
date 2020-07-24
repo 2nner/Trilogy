@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.khsbs.trilogy.R
 import com.khsbs.trilogy.databinding.ActivityInterpretBinding
+import com.khsbs.trilogy.ui.history.HistoryFragment
 import com.khsbs.trilogy.ui.input.InputTextFragment
 import com.khsbs.trilogy.ui.language.SelectLanguageFragment
 import timber.log.Timber
@@ -24,7 +25,7 @@ class InterpretActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = this.viewModel
 
-        binding.cvInterpetResult.setOnClickListener {
+        binding.cvInputText.setOnClickListener {
             InputTextFragment().show(supportFragmentManager, "input_text")
         }
 
@@ -34,6 +35,10 @@ class InterpretActivity : AppCompatActivity() {
 
         binding.tvTargetLang.setOnClickListener {
             SelectLanguageFragment().show(supportFragmentManager, "select_language_target")
+        }
+
+        binding.tvRecentIcon.setOnClickListener {
+            HistoryFragment().show(supportFragmentManager, "history")
         }
     }
 }
