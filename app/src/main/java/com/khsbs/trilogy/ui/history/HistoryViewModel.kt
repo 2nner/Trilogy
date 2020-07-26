@@ -9,5 +9,6 @@ class HistoryViewModel : ViewModel() {
     private val repository = HistoryRepository(
         AppDatabase.getDatabase().historyDao()
     )
+
     val historyList: LiveData<List<InterpretHistory>> = repository.historyList
 }

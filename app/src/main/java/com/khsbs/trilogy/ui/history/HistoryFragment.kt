@@ -2,10 +2,14 @@ package com.khsbs.trilogy.ui.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.khsbs.trilogy.R
 import com.khsbs.trilogy.databinding.DialogHistoryListBinding
 import com.khsbs.trilogy.ui.custom.FullScreenBottomSheetDialogFragment
@@ -21,10 +25,32 @@ class HistoryFragment : FullScreenBottomSheetDialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        with(binding.rvHistoryList) {
+            adapter = HistoryAdapter()
+            layoutManager = LinearLayoutManager(context)
+        }
+
+        (activity as AppCompatActivity).apply {
+            setSupportActionBar(binding.toolbar)
+            setHasOptionsMenu(true)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.historyList.observe(this@HistoryFragment, Observer {
+            (binding.rvHistoryList.adapter as HistoryAdapter).updateList(it)
+        })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            dismiss()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

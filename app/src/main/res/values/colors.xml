@@ -10,4 +10,5 @@
     <color name="colorGoogleTranslator">#66000000</color>
 
     <color name="select_language_darkGrey">#66000000</color>
+    <color name="history_text">#66000000</color>
 </resources>
