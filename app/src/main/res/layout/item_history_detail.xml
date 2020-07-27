@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="item"
+            type="com.khsbs.trilogy.repository.entity.InterpretHistory" />
+    </data>
+    
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:theme="@style/Theme.MaterialComponents.Light"
+        android:background="@android:color/white"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_history_sourceLang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/appColor"
+                android:textStyle="bold"
+                android:text="@{item.sourceLang}"
+                tools:text="영어"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_source_to_target_arrow"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_source_to_target"
+                android:layout_marginStart="5dp"
+                app:layout_constraintTop_toTopOf="@id/tv_history_sourceLang"
+                app:layout_constraintBottom_toBottomOf="@id/tv_history_sourceLang"
+                app:layout_constraintStart_toEndOf="@id/tv_history_sourceLang"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/appColor"
+                android:textStyle="bold"
+                android:text="@{item.targetLang}"
+                tools:text="한국어"
+                android:layout_marginStart="5dp"
+                app:layout_constraintTop_toTopOf="@id/tv_history_sourceLang"
+                app:layout_constraintBottom_toBottomOf="@id/tv_history_sourceLang"
+                app:layout_constraintStart_toEndOf="@id/iv_source_to_target_arrow" />
+
+            <TextView
+                android:id="@+id/tv_input_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/history_text"
+                android:textStyle="bold"
+                android:text="@{item.inputText}"
+                tools:text="한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="@id/tv_history_sourceLang"
+                app:layout_constraintEnd_toEndOf="@id/iv_close"
+                app:layout_constraintTop_toBottomOf="@id/tv_history_sourceLang"/>
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close"
+                android:scaleType="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_dialog_papago"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/interpretResult_papago"
+                android:textColor="@color/colorPapago"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_input_text"
+                app:layout_constraintStart_toStartOf="@id/tv_input_text"/>
+
+            <TextView
+                android:id="@+id/tv_result_papago"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.resultPapago}"
+                tools:text="파파고 번역 결과"
+                android:textStyle="bold"
+                android:textColor="@color/colorPapago"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@id/tv_input_text"
+                app:layout_constraintEnd_toEndOf="@id/tv_input_text"
+                app:layout_constraintTop_toBottomOf="@id/text_dialog_papago"/>
+
+            <TextView
+                android:id="@+id/text_dialog_kakaoi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/interpretResult_kakaoi"
+                android:textColor="@color/colorKakaoi"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginTop="28dp"
+                app:layout_constraintStart_toStartOf="@id/tv_input_text"
+                app:layout_constraintTop_toBottomOf="@id/tv_result_papago"/>
+
+            <TextView
+                android:id="@+id/tv_result_kakaoi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.resultKakaoi}"
+                tools:text="카카오 i 번역 결과"
+                android:textStyle="bold"
+                android:textColor="@color/colorKakaoi"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@id/tv_input_text"
+                app:layout_constraintEnd_toEndOf="@id/tv_input_text"
+                app:layout_constraintTop_toBottomOf="@id/text_dialog_kakaoi"/>
+
+            <TextView
+                android:id="@+id/text_dialog_googletrans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/interpretResult_google"
+                android:textColor="@color/colorGoogleTranslator"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginTop="28dp"
+                app:layout_constraintStart_toStartOf="@id/tv_input_text"
+                app:layout_constraintTop_toBottomOf="@id/tv_result_kakaoi"/>
+
+            <TextView
+                android:id="@+id/tv_result_googletrans"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.resultGoogle}"
+                tools:text="구글 번역 결과"
+                android:textStyle="bold"
+                android:textColor="@color/colorGoogleTranslator"
+                android:textSize="24sp"
+                android:layout_marginBottom="28dp"
+                app:layout_constraintStart_toStartOf="@id/tv_input_text"
+                app:layout_constraintEnd_toEndOf="@id/tv_input_text"
+                app:layout_constraintTop_toBottomOf="@id/text_dialog_googletrans"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+    
+</layout>

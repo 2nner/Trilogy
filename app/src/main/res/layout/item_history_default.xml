@@ -10,7 +10,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="160dp"
         app:cardCornerRadius="10dp"
         android:theme="@style/Theme.MaterialComponents.Light"
         android:background="@android:color/white"
@@ -68,7 +68,7 @@
                 android:text="@{item.inputText}"
                 android:maxLines="3"
                 android:ellipsize="end"
-                tools:text="한국어"
+                tools:text="한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어한국어"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="@id/tv_history_sourceLang"
                 app:layout_constraintEnd_toEndOf="@id/iv_history_expand"
@@ -76,11 +76,15 @@
 
             <ImageView
                 android:id="@+id/iv_history_expand"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_history_expand"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

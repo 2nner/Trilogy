@@ -1,6 +1,7 @@
 package com.khsbs.trilogy.repository.entity
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "history")
