@@ -11,16 +11,25 @@ import com.khsbs.trilogy.R
 import com.khsbs.trilogy.databinding.DialogInputTextBinding
 import com.khsbs.trilogy.ui.custom.FullScreenBottomSheetDialogFragment
 import com.khsbs.trilogy.ui.main.InterpretViewModel
-import com.khsbs.trilogy.ui.main.InterpretViewModelFactory
 import com.khsbs.trilogy.util.multilineIme
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class InputTextFragment : FullScreenBottomSheetDialogFragment() {
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var binding: DialogInputTextBinding
     private lateinit var viewModel: InterpretViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_input_text, container, false)
-        viewModel = ViewModelProvider(requireActivity(), InterpretViewModelFactory()).get(InterpretViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(InterpretViewModel::class.java)
 
         binding.viewModel = this.viewModel
         binding.lifecycleOwner = viewLifecycleOwner

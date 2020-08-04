@@ -8,6 +8,9 @@ import com.khsbs.trilogy.BuildConfig
 import com.khsbs.trilogy.repository.entity.*
 import com.khsbs.trilogy.repository.local.AppDatabase
 import com.khsbs.trilogy.repository.remote.ApiRepository
+import com.khsbs.trilogy.repository.remote.GoogleApiService
+import com.khsbs.trilogy.repository.remote.KakaoiApiService
+import com.khsbs.trilogy.repository.remote.PapagoApiService
 import com.khsbs.trilogy.ui.history.HistoryRepository
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,10 +18,14 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 
-class InterpretRepository {
+class InterpretRepository (
+    private val papagoService: PapagoApiService,
+    private val kakaoiService: KakaoiApiService,
+    private val googleService: GoogleApiService
+) {
     fun interpret(source: LanguageType, target: LanguageType, inputMessage: String): Single<InterpretResult> {
         return Single.zip(
-            ApiRepository.papagoService.getTranslatedResult(
+            papagoService.getTranslatedResult(
                 BuildConfig.NAVER_CLIENT_ID,
                 BuildConfig.NAVER_CLIENT_SECRET,
                 source.papagoCode,
@@ -31,7 +38,7 @@ class InterpretRepository {
                     Single.just(Papago(Papago.Message(Papago.Message.Result(it.localizedMessage!!))))
                 }
             },
-            ApiRepository.kakaoiService.getTranslatedResult(
+            kakaoiService.getTranslatedResult(
                 "KakaoAK " + BuildConfig.KAKAO_API_KEY,
                 inputMessage,
                 source.kakaoiCode,
@@ -43,7 +50,7 @@ class InterpretRepository {
                     Single.just(Kakaoi(listOf(listOf(it.localizedMessage!!))))
                 }
             },
-            ApiRepository.googleService.getTranslateResult(
+            googleService.getTranslateResult(
                 BuildConfig.GOOGLE_CREDENTIAL_API_KEY,
                 inputMessage,
                 source.googleCode,

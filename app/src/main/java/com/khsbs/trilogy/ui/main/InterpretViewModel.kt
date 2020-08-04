@@ -11,6 +11,10 @@ import com.khsbs.trilogy.repository.entity.InterpretHistory
 import com.khsbs.trilogy.repository.remote.ApiRepository
 import com.khsbs.trilogy.repository.entity.LanguageType
 import com.khsbs.trilogy.repository.local.AppDatabase
+import com.khsbs.trilogy.repository.local.HistoryDao
+import com.khsbs.trilogy.repository.remote.GoogleApiService
+import com.khsbs.trilogy.repository.remote.KakaoiApiService
+import com.khsbs.trilogy.repository.remote.PapagoApiService
 import com.khsbs.trilogy.ui.custom.SingleLiveEvent
 import com.khsbs.trilogy.ui.history.HistoryRepository
 import io.reactivex.Single
@@ -20,9 +24,15 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 import kotlin.text.StringBuilder
 
-class InterpretViewModel : ViewModel() {
+class InterpretViewModel @Inject constructor(
+    papagoService: PapagoApiService,
+    kakaoiService: KakaoiApiService,
+    googleService: GoogleApiService,
+    historyDao: HistoryDao
+) : ViewModel() {
     val inputMessage = MutableLiveData<String>()
     val sourceLanguage = MutableLiveData(LanguageType.KOR)
     val targetLanguage = MutableLiveData(LanguageType.ENG)
@@ -34,8 +44,8 @@ class InterpretViewModel : ViewModel() {
     val dialogEvent = SingleLiveEvent<Any>()
 
     private val disposable = CompositeDisposable()
-    private val interpretRepository = InterpretRepository()
-    private val historyRepository = HistoryRepository(AppDatabase.getDatabase().historyDao())
+    private val interpretRepository = InterpretRepository(papagoService, kakaoiService, googleService)
+    private val historyRepository = HistoryRepository(historyDao)
 
     fun interpret() {
         disposable.add(
@@ -101,12 +111,5 @@ class InterpretViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         disposable.dispose()
-    }
-}
-
-class InterpretViewModelFactory() : ViewModelProvider.Factory {
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return InterpretViewModel() as T
     }
 }

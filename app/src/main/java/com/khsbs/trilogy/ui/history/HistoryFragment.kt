@@ -13,14 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.khsbs.trilogy.R
 import com.khsbs.trilogy.databinding.DialogHistoryListBinding
 import com.khsbs.trilogy.ui.custom.FullScreenBottomSheetDialogFragment
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class HistoryFragment : FullScreenBottomSheetDialogFragment() {
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var binding: DialogHistoryListBinding
     private lateinit var viewModel: HistoryViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_history_list, container, false)
-        viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(HistoryViewModel::class.java)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -42,7 +52,7 @@ class HistoryFragment : FullScreenBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.historyList.observe(this@HistoryFragment, Observer {
+        viewModel.historyList.observe(viewLifecycleOwner, Observer {
             (binding.rvHistoryList.adapter as HistoryAdapter).updateList(it)
         })
     }
