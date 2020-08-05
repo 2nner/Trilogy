@@ -5,21 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.khsbs.trilogy.databinding.DialogSelectLanguageBinding
 import com.khsbs.trilogy.ui.main.InterpretViewModel
 import com.khsbs.trilogy.R
 import com.khsbs.trilogy.ui.custom.FullScreenBottomSheetDialogFragment
-import com.khsbs.trilogy.ui.main.InterpretViewModelFactory
 
 class SelectLanguageFragment : FullScreenBottomSheetDialogFragment() {
     private lateinit var binding: DialogSelectLanguageBinding
-    private lateinit var viewModel: InterpretViewModel
+    // private lateinit var viewModel: InterpretViewModel
+    private val viewModel: InterpretViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_select_language, container, false)
-        viewModel = ViewModelProvider(requireActivity(), InterpretViewModelFactory()).get(InterpretViewModel::class.java)
+        // viewModel = ViewModelProvider(requireActivity(), InterpretViewModelFactory()).get(InterpretViewModel::class.java)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

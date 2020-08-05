@@ -6,21 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.khsbs.trilogy.R
 import com.khsbs.trilogy.databinding.DialogInputTextBinding
 import com.khsbs.trilogy.ui.custom.FullScreenBottomSheetDialogFragment
 import com.khsbs.trilogy.ui.main.InterpretViewModel
-import com.khsbs.trilogy.ui.main.InterpretViewModelFactory
 import com.khsbs.trilogy.util.multilineIme
 
 class InputTextFragment : FullScreenBottomSheetDialogFragment() {
     private lateinit var binding: DialogInputTextBinding
-    private lateinit var viewModel: InterpretViewModel
+    // private lateinit var viewModel: InterpretViewModel
+    private val viewModel: InterpretViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_input_text, container, false)
-        viewModel = ViewModelProvider(requireActivity(), InterpretViewModelFactory()).get(InterpretViewModel::class.java)
+        /// viewModel = ViewModelProvider(requireActivity(), InterpretViewModelFactory()).get(InterpretViewModel::class.java)
 
         binding.viewModel = this.viewModel
         binding.lifecycleOwner = viewLifecycleOwner

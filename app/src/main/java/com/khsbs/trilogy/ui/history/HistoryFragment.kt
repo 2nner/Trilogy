@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.khsbs.trilogy.R
 import com.khsbs.trilogy.databinding.DialogHistoryListBinding
@@ -16,11 +16,12 @@ import com.khsbs.trilogy.ui.custom.FullScreenBottomSheetDialogFragment
 
 class HistoryFragment : FullScreenBottomSheetDialogFragment() {
     private lateinit var binding: DialogHistoryListBinding
-    private lateinit var viewModel: HistoryViewModel
+    // private lateinit var viewModel: HistoryViewModel
+    private val viewModel: HistoryViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_history_list, container, false)
-        viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
+        // viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
